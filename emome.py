@@ -16,6 +16,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QIcon, QPalette, QColor
 import pyperclip
 import keyboard
+from PyQt5 import QtCore
 
 # Define seven sets of emojis as simple lists
 emojis_set1 = ["👾", "🍕", "🔥", "😢", "😄", "⭐", "❤️", "👍", "🐙"]
@@ -167,6 +168,9 @@ class EmojiWindow(QMainWindow):
 
         keyboard.add_hotkey('ctrl+alt+e', self.toggle_visibility)
 
+        # Set the application to stay on top
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+
     def shift_key_pressed(self, e):
         if not e.is_keypad:
             if self.current_emojis is not emojis_set2:
@@ -241,4 +245,8 @@ if __name__ == '__main__':
     app.setPalette(palette)
 
     emoji_window.show()
+
+    # Ensure the application gains focus
+    emoji_window.activateWindow()
+
     sys.exit(app.exec_())
